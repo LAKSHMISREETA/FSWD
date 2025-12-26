@@ -1,0 +1,124 @@
+Task 5: Design a feedback form interface that displays submitted data dynamically on the screen.
+App.jsx
+import { useState } from &quot;react&quot;;
+import &quot;./App.css&quot;;
+function App() {
+  const [name, setName] = useState(&quot;&quot;);
+  const [message, setMessage] = useState(&quot;&quot;);
+  const [feedbacks, setFeedbacks] = useState([]);
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    if (!name || !message) return;
+    const newFeedback = {
+      name,
+      message,
+    };
+    setFeedbacks([...feedbacks, newFeedback]);
+    setName(&quot;&quot;);
+    setMessage(&quot;&quot;);
+  };
+  return (
+    &lt;div className=&quot;container&quot;&gt;
+      &lt;div className=&quot;feedback-box&quot;&gt;
+        &lt;h2&gt;�� Feedback Form&lt;/h2&gt;
+        &lt;form onSubmit={handleSubmit}&gt;
+          &lt;input
+            type=&quot;text&quot;
+            placeholder=&quot;Your Name&quot;
+            value={name}
+            onChange={(e) =&gt; setName(e.target.value)}
+          /&gt;
+          &lt;textarea
+            placeholder=&quot;Your Feedback&quot;
+            value={message}
+            onChange={(e) =&gt; setMessage(e.target.value)}
+          &gt;&lt;/textarea&gt;
+
+          &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+        &lt;/form&gt;
+        &lt;div className=&quot;feedback-list&quot;&gt;
+          {feedbacks.length === 0 &amp;&amp; (
+            &lt;p className=&quot;empty&quot;&gt;No feedback yet&lt;/p&gt;
+          )}
+          {feedbacks.map((fb, index) =&gt; (
+            &lt;div key={index} className=&quot;feedback-item&quot;&gt;
+              &lt;h4&gt;{fb.name}&lt;/h4&gt;
+              &lt;p&gt;{fb.message}&lt;/p&gt;
+            &lt;/div&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+export default App;
+
+App.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  padding: 20px;
+}
+.feedback-box {
+  background: white;
+  padding: 30px;
+  width: 420px;
+
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.feedback-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.feedback-box input,
+.feedback-box textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+.feedback-box textarea {
+  resize: none;
+  height: 80px;
+}
+.feedback-box button {
+  width: 100%;
+  padding: 10px;
+  background: #a6c1ee;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.feedback-box button:hover {
+  background: #8fa8e6;
+}
+.feedback-list {
+  margin-top: 20px;
+}
+.feedback-item {
+  background: #f4f6ff;
+  padding: 10px;
+
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.feedback-item h4 {
+  margin-bottom: 5px;
+}
+.empty {
+  text-align: center;
+  color: gray;
+}
