@@ -1,0 +1,128 @@
+Task 7: Simulate an attendance tracker interface that marks students present or absent
+dynamically.
+App.jsx
+import { useState } from &quot;react&quot;;
+import &quot;./App.css&quot;;
+const studentsList = [
+  &quot;Arun&quot;,
+  &quot;Bala&quot;,
+  &quot;Charan&quot;,
+  &quot;Divya&quot;,
+  &quot;Karthik&quot;,
+];
+function App() {
+  const [attendance, setAttendance] = useState(
+    studentsList.map((name) =&gt; ({
+      name,
+      status: &quot;Not Marked&quot;,
+    }))
+  );
+  const markAttendance = (index, status) =&gt; {
+    const updated = [...attendance];
+    updated[index].status = status;
+    setAttendance(updated);
+  };
+  return (
+    &lt;div className=&quot;container&quot;&gt;
+      &lt;div className=&quot;attendance-box&quot;&gt;
+        &lt;h2&gt;�� Attendance Tracker&lt;/h2&gt;
+        {attendance.map((student, index) =&gt; (
+          &lt;div key={index} className=&quot;student-row&quot;&gt;
+            &lt;span&gt;{student.name}&lt;/span&gt;
+            &lt;div className=&quot;buttons&quot;&gt;
+              &lt;button
+                className=&quot;present&quot;
+                onClick={() =&gt; markAttendance(index, &quot;Present&quot;)}
+              &gt;
+                Present
+              &lt;/button&gt;
+
+              &lt;button
+                className=&quot;absent&quot;
+                onClick={() =&gt; markAttendance(index, &quot;Absent&quot;)}
+              &gt;
+                Absent
+              &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;span
+              className={`status ${
+                student.status === &quot;Present&quot;
+                  ? &quot;green&quot;
+                  : student.status === &quot;Absent&quot;
+                  ? &quot;red&quot;
+                  : &quot;&quot;
+              }`}
+            &gt;
+              {student.status}
+            &lt;/span&gt;
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+export default App;
+
+App.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #d4fc79, #96e6a1);
+
+  padding: 20px;
+}
+.attendance-box {
+  background: white;
+  padding: 30px;
+  width: 480px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.attendance-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.student-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+.present {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.absent {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.status {
+  font-weight: bold;
+}
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
