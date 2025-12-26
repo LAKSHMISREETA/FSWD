@@ -1,133 +1,179 @@
-Task 6: Implement a simple course enrollment form that updates the enrolled course list in real
-time.
+Task 6: Implement a simple course enrollment form that updates the enrolled course list in real time.
 App.jsx
-import { useState } from &quot;react&quot;;
-import &quot;./App.css&quot;;
-const courseList = [
-  &quot;React Basics&quot;,
-  &quot;JavaScript Fundamentals&quot;,
-  &quot;Web Development&quot;,
-  &quot;Python Programming&quot;,
-  &quot;Data Structures&quot;,
-];
-function App() {
-  const [studentName, setStudentName] = useState(&quot;&quot;);
-  const [course, setCourse] = useState(&quot;&quot;);
-  const [enrollments, setEnrollments] = useState([]);
-  const handleEnroll = (e) =&gt; {
-    e.preventDefault();
-    if (!studentName || !course) return;
-    const newEnrollment = {
-      name: studentName,
-      course,
-    };
-    setEnrollments([...enrollments, newEnrollment]);
-    setStudentName(&quot;&quot;);
-    setCourse(&quot;&quot;);
-  };
-  return (
-    &lt;div className=&quot;container&quot;&gt;
-      &lt;div className=&quot;enroll-box&quot;&gt;
-        &lt;h2&gt;�� Course Enrollment&lt;/h2&gt;
-        &lt;form onSubmit={handleEnroll}&gt;
-          &lt;input
-            type=&quot;text&quot;
-            placeholder=&quot;Student Name&quot;
-            value={studentName}
+import { useState } from "react";
+import "./App.css";
 
-            onChange={(e) =&gt; setStudentName(e.target.value)}
-          /&gt;
-          &lt;select
-            value={course}
-            onChange={(e) =&gt; setCourse(e.target.value)}
-          &gt;
-            &lt;option value=&quot;&quot;&gt;Select Course&lt;/option&gt;
-            {courseList.map((c, index) =&gt; (
-              &lt;option key={index} value={c}&gt;
-                {c}
-              &lt;/option&gt;
-            ))}
-          &lt;/select&gt;
-          &lt;button type=&quot;submit&quot;&gt;Enroll&lt;/button&gt;
-        &lt;/form&gt;
-        &lt;div className=&quot;enrolled-list&quot;&gt;
-          &lt;h3&gt;�� Enrolled Students&lt;/h3&gt;
-          {enrollments.length === 0 &amp;&amp; (
-            &lt;p className=&quot;empty&quot;&gt;No enrollments yet&lt;/p&gt;
-          )}
-          {enrollments.map((item, index) =&gt; (
-            &lt;div key={index} className=&quot;enroll-item&quot;&gt;
-              &lt;span&gt;{item.name}&lt;/span&gt;
-              &lt;span&gt;{item.course}&lt;/span&gt;
-            &lt;/div&gt;
-          ))}
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  );
+
+const courseList = [
+  "React Basics",
+  "JavaScript Fundamentals",
+  "Web Development",
+  "Python Programming",
+  "Data Structures",
+];
+
+
+function App() {
+  const [studentName, setStudentName] = useState("");
+  const [course, setCourse] = useState("");
+  const [enrollments, setEnrollments] = useState([]);
+
+
+  const handleEnroll = (e) => {
+    e.preventDefault();
+
+
+    if (!studentName || !course) return;
+
+
+    const newEnrollment = {
+      name: studentName,
+      course,
+    };
+
+
+    setEnrollments([...enrollments, newEnrollment]);
+    setStudentName("");
+    setCourse("");
+  };
+
+
+  return (
+    <div className="container">
+      <div className="enroll-box">
+        <h2>🎓 Course Enrollment</h2>
+
+
+        <form onSubmit={handleEnroll}>
+          <input
+            type="text"
+            placeholder="Student Name"
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+          />
+
+
+          <select
+            value={course}
+            onChange={(e) => setCourse(e.target.value)}
+          >
+            <option value="">Select Course</option>
+            {courseList.map((c, index) => (
+              <option key={index} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+
+
+          <button type="submit">Enroll</button>
+        </form>
+
+
+        <div className="enrolled-list">
+          <h3>📋 Enrolled Students</h3>
+
+
+          {enrollments.length === 0 && (
+            <p className="empty">No enrollments yet</p>
+          )}
+
+
+          {enrollments.map((item, index) => (
+            <div key={index} className="enroll-item">
+              <span>{item.name}</span>
+              <span>{item.course}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
+
+
 export default App;
+
+
 
 App.css
 * {
-  margin: 0;
-  padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+
 .container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #cfd9df, #e2ebf0);
-  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #cfd9df, #e2ebf0);
+  padding: 20px;
 }
+
+
 .enroll-box {
-  background: white;
-  padding: 30px;
-  width: 450px;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: white;
+  padding: 30px;
+  width: 450px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
+
+
 .enroll-box h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
+
+
 .enroll-box input,
 .enroll-box select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.enroll-box button {
-  width: 100%;
-  padding: 10px;
-  background: #6a85b6;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
+
+.enroll-box button {
+  width: 100%;
+  padding: 10px;
+  background: #6a85b6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
 .enroll-box button:hover {
-  background: #5a75a6;
+  background: #5a75a6;
 }
+
+
 .enrolled-list {
-  margin-top: 20px;
+  margin-top: 20px;
 }
+
+
 .enroll-item {
-  display: flex;
-  justify-content: space-between;
-  background: #f5f7fa;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  background: #f5f7fa;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
+
+
 .empty {
-  text-align: center;
-  color: gray;
+  text-align: center;
+  color: gray;
 }
+
+
