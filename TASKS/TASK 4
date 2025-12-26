@@ -1,0 +1,96 @@
+Task 4: Implement a real-time polling system for classroom use.
+App.jsx
+import { useState } from &quot;react&quot;;
+import &quot;./App.css&quot;;
+function App() {
+  const [votes, setVotes] = useState({
+    React: 0,
+    Angular: 0,
+    Vue: 0,
+    Svelte: 0,
+  });
+  const totalVotes =
+    votes.React + votes.Angular + votes.Vue + votes.Svelte;
+  const vote = (option) =&gt; {
+    setVotes({ ...votes, [option]: votes[option] + 1 });
+  };
+  const getPercentage = (count) =&gt; {
+    if (totalVotes === 0) return 0;
+    return ((count / totalVotes) * 100).toFixed(1);
+  };
+  return (
+    &lt;div className=&quot;container&quot;&gt;
+      &lt;div className=&quot;poll-box&quot;&gt;
+        &lt;h2&gt;�� Classroom Poll&lt;/h2&gt;
+        &lt;p&gt;Which Frontend Framework do you like?&lt;/p&gt;
+        {Object.keys(votes).map((option) =&gt; (
+          &lt;div key={option} className=&quot;option&quot;&gt;
+            &lt;button onClick={() =&gt; vote(option)}&gt;{option}&lt;/button&gt;
+            &lt;span&gt;
+              {votes[option]} votes ({getPercentage(votes[option])}%)
+            &lt;/span&gt;
+          &lt;/div&gt;
+        ))}
+        &lt;h4&gt;Total Votes: {totalVotes}&lt;/h4&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+
+}
+export default App;
+
+App.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+}
+.poll-box {
+  background: white;
+  padding: 30px;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.poll-box h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.poll-box p {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+}
+.option button {
+  padding: 8px 15px;
+  background: #66a6ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.option button:hover {
+  background: #4d8df5;
+}
+.option span {
+  font-size: 14px;
+}
+.poll-box h4 {
+  margin-top: 20px;
+  text-align: center;
+}
